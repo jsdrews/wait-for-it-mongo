@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/biglittletech/platform/packages/python-poetry:1.0.1
+FROM jsdrews/python-poetry:latest
 
 ARG HTTPS_PROXY
 
