@@ -1,0 +1,29 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  VERSION:
+    sh: poetry version -s
+  PROJECT: wait-for-it-mongo
+  ORGANISATION: jsdrews
+  
+
+tasks:
+  default:
+    cmds:
+      - task --list-all
+    silent: true
+    description: List all available tasks
+
+  build:
+    cmds:
+      - docker build -t {{ .ORGANISATION }}/{{ .PROJECT }}:{{ .VERSION }} .
+      - docker tag {{ .ORGANISATION }}/{{ .PROJECT }}:{{ .VERSION }} {{ .ORGANISATION }}/{{ .PROJECT }}:latest
+    description: Build the project
+
+  publish:
+    cmds:
+      - docker push {{ .ORGANISATION }}/{{ .PROJECT }}:{{ .VERSION }}
+      - docker push {{ .ORGANISATION }}/{{ .PROJECT }}:latest
+    description: Publish the project

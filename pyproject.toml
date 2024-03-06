@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "wait-for-it-mongo"
-version = "1.0.4"
-description = "Wait for a mongodb resource to become available"
+version = "1.0.0"
+description = "Poll a mongodb instance until it is ready."
 authors = ["John Andrews <johnandrews@macvanderlay.lan>"]
 
 [tool.poetry.dependencies]

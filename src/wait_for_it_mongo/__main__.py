@@ -17,50 +17,25 @@ def test_connection(client: pymongo.MongoClient) -> bool:
         
 
 def main(
-    protocol: str = typer.Option(
-        default="mongodb", envvar="MONGO_PROTOCOL"
-    ),
-    host: str = typer.Option(
-        default="localhost:27017", envvar="MONGO_HOST"
+    db_uri: str = typer.Option(
+        default="mongodb://localhost:27017", envvar="DB_URI"
     ),
     username: str = typer.Option(
-        default="root", envvar="MONGO_USERNAME"
+        default=None, envvar="DB_ROOT_USERNAME"
     ),
     password: str = typer.Option(
-        default="1234", envvar="MONGO_PASSWORD"
-    ),
-    auth_source: str = typer.Option(
-        default="admin", envvar="MONGO_AUTH_SOURCE"
-    ),
-    architecture: str = typer.Option(
-        default="standalone", envvar="MONGO_ARCHITECTURE"
-    ),
-    replica_set_name: str = typer.Option(
-        default="rs0", envvar="MONGO_REPLICA_SET_NAME"
-    ),
-    tls: bool = typer.Option(
-        default=False, envvar="MONGO_TLS"
-    ),
-    ssl: bool = typer.Option(
-        default=False, envvar="MONGO_SSL"
+        default=None, envvar="DB_ROOT_PASSWORD"
     ),
     timeout: int = 60,
 ):
     # Example: mongodb://<username>:<password>@mongo:27017/<db_name>?authSource=admin
-    url = (
-        f"{protocol}://{username}:{password}@"
-        f"{host}/?authSource={auth_source}"
-    )
-    if architecture == "replicaset":
-        url += f"&replicaSet={replica_set_name}"
-    if not tls:
-        url += "&tls=false"
-    if not ssl:
-        url += "&ssl=false"
-    
-    print(f"Testing mongo connection: {url.replace(password, '****')}")
+    print(f"Testing mongo connection: {db_uri}")
 
-    client = pymongo.MongoClient(url)
+    client = pymongo.MongoClient(
+        db_uri,
+        username=username,
+        password=password,
+    )
 
     timeout_obj = datetime.timedelta(seconds=timeout)
     then = datetime.datetime.utcnow()

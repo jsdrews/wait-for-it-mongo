@@ -1,1 +1,1 @@
-Wait for a mongodb resource to become available.
+Poll a mongodb instance until it is ready.

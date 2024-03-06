@@ -1,3 +1,0 @@
-export PROJECT=wait-for-it-mongo
-export ORGANISATION=registry.gitlab.com/biglittletech/platform/packages
-# export HTTPS_PROXY=http://$SITE-proxy-2:3128
